@@ -14,7 +14,7 @@
 
 <body>
   <header class="container-fluid text-center text-white p-2 weather-header">
-    <h1>Weather Dashboard</h1>
+    <h1>Weather Station</h1>
   </header>
 
   <!-- max-width for ultra wide resolutions -->
@@ -27,8 +27,9 @@
         <form>
           <div class="form-group mt-3">
             <label for="search-input" class="ml-2">Search for a City:</label>
-            <input type="text" class="form-control" id="search-input" aria-labelledby="form-heading" 
+            <input type="text" class="form-control mb-1" id="search-input" aria-labelledby="form-heading" 
               aria-controls="today forecast" placeholder="Enter city">
+            <small>For accurate results, enter 'city, country'</small>
           </div>
           <button type="text" class="btn btn-primary btn-block mb-3" id="run-search">Submit</button>
         </form>
@@ -46,10 +47,10 @@
       <section id="today" class="col-lg-9 mt-3 pb-3" role="region" aria-live="polite">
         <div id="featured-city" class="d-flex pt-2">
           <div>
-            <h3>London (14/2/2022)</h3>
-            <p>some more text</p>
-            <p>some more text</p>
-            <p>some more text</p>
+            <h3 id="city">London (14/2/2022)</h3>
+            <p id="current-temp"></p>
+            <p id="current-wind"></p>
+            <p id="current-humidity"></p>
           </div>
         </div>
         <div class="d-flex justify-content-between">

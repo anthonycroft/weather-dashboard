@@ -1,5 +1,8 @@
 // This is our API key
 var APIKey = "da32ef5f8559d578f784b0190962fefd";
+var city;
+var country;
+var state;
 
 // Here we are building the URL we need to query the database
 // var queryURL = "https://api.openweathermap.org/data/2.5/forecast?" +
@@ -16,6 +19,10 @@ function buildQueryURLForecast(coords) {
 
   // console.log(coords);
 
+  city = coords[0].name
+  country = coords[0].country
+  state = coords[0].state
+
   // queryURL is the url we'll use to query the API
   var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
 
@@ -26,6 +33,7 @@ function buildQueryURLForecast(coords) {
   // Grab text the user typed into the search input, add to the queryParams object
   queryParams.lat = coords[0].lat
   queryParams.lon = coords[0].lon
+  queryParams.lang = 'en';
 
   // Logging the URL so we have access to it for troubleshooting
   console.log("---------------\nURL: " + queryURL + "\n---------------");
@@ -34,6 +42,8 @@ function buildQueryURLForecast(coords) {
 }
 
 function getCoordURL() {
+  let inputCity = ''; // holds the search value user entered
+
   // queryURL is the url we'll use to query the API
   var queryURL = "http://api.openweathermap.org/geo/1.0/direct?";
 
@@ -41,16 +51,20 @@ function getCoordURL() {
   // Set the API key
   var queryParams = { "appid": APIKey };
 
-  // Grab text the user typed into the search input, add to the queryParams object
-  queryParams.q = $("#search-input")
-    .val()
-    .trim();
+  // Grab text the user typed into the search input - store in global var for
+  // later and add to query params
+  inputCity = $("#search-input")
+  .val()
+  .trim();
+
+  queryParams.q = inputCity;
 
   queryParams.limit = 1;
+  queryParams.lang = 'en';
 
   // Logging the URL so we have access to it for troubleshooting
   // console.log("---------------\nURL: " + queryURL + "\n---------------");
-  // console.log(queryURL + $.param(queryParams));
+  console.log(queryURL + $.param(queryParams));
   return queryURL + $.param(queryParams);
 }
 
@@ -66,14 +80,25 @@ function updateWeather (data) {
 
     // Log the resulting object
 
+    // var currentTime = moment();
+    console.log("current time is " + moment());
+
+
+    // display current weather to page
+    $('#city').text(`${city} (${moment().format('DD/M/YYYY')})`)
+    $('#current-temp').text("Temp (C): " + (data.list[0].main.temp -273.15).toFixed(2)) ;
+    $('#current-wind').text("Wind: " + data.list[0].wind.speed);
+    $('#current-humidity').text("Humidity: " + data.list[0].main.humidity);
+
+
     // Transfer content to HTML
     // $("#city").text("City: " + weatherData.city.name);
-    for (let i = 0; i < 5; i++) {
-      $(`#day-${i+1} ul li:nth-child(1)`).text("Temp (C): " + (data.list[i].main.temp -273.15).toFixed(2)) ;
-      $(`#day-${i+1} ul li:nth-child(2)`).text("Wind: " + data.list[i].wind.speed);
-      $(`#day-${i+1} ul li:nth-child(3)`).text("Humidity: " + data.list[i].main.humidity);
-      displayIcon(i);
-    }
+    // for (let i = 0; i < 5; i++) {
+    //   $(`#day-${i+1} ul li:nth-child(1)`).text("Temp (C): " + (data.list[i].main.temp -273.15).toFixed(2)) ;
+    //   $(`#day-${i+1} ul li:nth-child(2)`).text("Wind: " + data.list[i].wind.speed);
+    //   $(`#day-${i+1} ul li:nth-child(3)`).text("Humidity: " + data.list[i].main.humidity);
+    //   displayIcon(i);
+    // }
 
     function displayIcon (index) {
       var iconCode = data.list[index].weather[0].icon;
@@ -108,17 +133,18 @@ $("#run-search").on("click", function(event) {
   // clear();
 
   // Build the query URL for the ajax request to the NYT API
-  var queryURL = getCoordURL();
+  var coordURL = getCoordURL();
 
   // Make the AJAX request to the API - GETs the JSON data at the queryURL.
   // The data then gets passed as an argument to the updatePage function
   $.ajax({
-    url: queryURL,
+    url: coordURL,
     method: "GET"
   })
   .then(buildQueryURLForecast)
-  .then(data => $.ajax({
-    url: data,
+  .then(forecastURL => 
+    $.ajax({
+    url: forecastURL,
     method: "GET"
   }))
   .then(data => updateWeather(data))
