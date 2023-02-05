@@ -4,16 +4,9 @@ var city;
 var country;
 var state;
 
-// Here we are building the URL we need to query the database
-// var queryURL = "https://api.openweathermap.org/data/2.5/forecast?" +
-//   "q=London,London&appid=" + APIKey;
-//   console.log(queryURL);
-
-  // api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid={API key}
-
   /**
- * pulls information from the form and build the query URL
- * @returns {string} URL for NYT API based on form inputs
+ * pulls information from the form and builds the query URL
+ * @returns {string} URL for openweathermap.org API based on form input
  */
 function buildQueryURLForecast(coords) {
 
@@ -60,7 +53,7 @@ function getCoordURL() {
   queryParams.q = inputCity;
 
   queryParams.limit = 1;
-  queryParams.lang = 'en';
+  // queryParams.lang = 'en';
 
   // Logging the URL so we have access to it for troubleshooting
   // console.log("---------------\nURL: " + queryURL + "\n---------------");
@@ -68,51 +61,47 @@ function getCoordURL() {
   return queryURL + $.param(queryParams);
 }
 
-// Here we run our AJAX call to the OpenWeatherMap API
-// $.ajax({
-//   url: queryURL,
-//   method: "GET"
-// })
-  // We store all of the retrieved data inside of an object called "response"
-  // .then(function(response) {
-
 function updateWeather (data) {
 
-    // Log the resulting object
-
-    // var currentTime = moment();
-    console.log("current time is " + moment());
-
-
     // display current weather to page
-    $('#city').text(`${city} (${moment().format('DD/M/YYYY')})`)
+    $('#city').text(`${city}, ${state} (${moment().format('DD/M/YYYY')})`)
     $('#current-temp').text("Temp (C): " + (data.list[0].main.temp -273.15).toFixed(2)) ;
     $('#current-wind').text("Wind: " + data.list[0].wind.speed);
     $('#current-humidity').text("Humidity: " + data.list[0].main.humidity);
 
+    displayForecast();
 
-    // Transfer content to HTML
-    // $("#city").text("City: " + weatherData.city.name);
-    // for (let i = 0; i < 5; i++) {
-    //   $(`#day-${i+1} ul li:nth-child(1)`).text("Temp (C): " + (data.list[i].main.temp -273.15).toFixed(2)) ;
-    //   $(`#day-${i+1} ul li:nth-child(2)`).text("Wind: " + data.list[i].wind.speed);
-    //   $(`#day-${i+1} ul li:nth-child(3)`).text("Humidity: " + data.list[i].main.humidity);
-    //   displayIcon(i);
-    // }
+    function displayForecast () {
 
-    function displayIcon (index) {
-      var iconCode = data.list[index].weather[0].icon;
-      var iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
-      $(`#day-${index+1} img`).attr("src", iconUrl);
+      var forecastTime;
+      var forecastData;
+      
+      // display 5-day forecast to page - use 12 midday as representative average of daily temp
+      for (let i = 0; i < 5; i++) {
+
+        // get the unix time for current day + i
+        forecastTime = moment().add(i+1, 'day').hours(12).minutes(0).seconds(0).unix();
+
+        // get the forecast for selected date
+        forecastData = data.list.find(item => item.dt === forecastTime);
+
+        // diplay the forecast weather for this day
+        $(`#day-${i+1} ul li:nth-child(1)`).text("Temp (C): " + (forecastData.main.temp -273.15).toFixed(2)) ;
+        $(`#day-${i+1} ul li:nth-child(2)`).text("Wind: " + forecastData.wind.speed);
+        $(`#day-${i+1} ul li:nth-child(3)`).text("Humidity: " + forecastData.main.humidity);
+        displayIcon(forecastData, i+1);
+      }
+
     }
-    
-    // Convert the temp to Celsius
-    // var tempC = weatherData.main.temp - 273.15;
 
-    // add temp content to html
-    // $(".temp").text("Temperature (K) " + response.main.temp);
-    // $(".tempC").text("Temperature (C) " + tempC.toFixed(2));
+    function displayIcon (forecastData, day) {
 
+      var iconCode = forecastData.weather[0].icon;
+      var iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+      $(`#day-${day} img`).attr("src", iconUrl);
+
+    }
+  
     // Log the data in the console as well
     // console.log("Wind Speed: " + weatherData.wind.speed);
     // console.log("Humidity: " + weatherData.main.humidity);
@@ -149,16 +138,4 @@ $("#run-search").on("click", function(event) {
   }))
   .then(data => updateWeather(data))
   
-
-  // .then( function(response) {
-
-  //   console.log(response);
-    
-  //   $("#wind").text("Wind Speed: " + response.list.wind.speed);
-  //   $("#humidity").text("Humidity: " + response.list.main.humidity);
-
-  //   var iconCode = response.weather[0].icon;
-  //   var iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
-  //   $("#weather-icon").attr("src", iconUrl)
-  // })
 })

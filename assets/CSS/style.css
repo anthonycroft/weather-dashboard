@@ -25,12 +25,12 @@ label {
   font-size: 1.5rem !important;
 }
 
-form label, h3 {
+form label, h3, small {
   color: #bda75a
 }
 
 small {
-  color: #8d9db6;
+  /* color: #8d9db6; */
 }
 
 h3 {
