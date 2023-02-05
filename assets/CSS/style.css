@@ -29,8 +29,8 @@ form label, h3, small {
   color: #bda75a
 }
 
-small {
-  /* color: #8d9db6; */
+small em {
+  color: orange;
 }
 
 h3 {

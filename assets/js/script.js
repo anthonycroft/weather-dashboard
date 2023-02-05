@@ -10,11 +10,11 @@ var state;
  */
 function buildQueryURLForecast(coords) {
 
-  // console.log(coords);
-
   city = coords[0].name
-  country = coords[0].country
+  countryCode = coords[0].country
   state = coords[0].state
+
+  // console.log("country is " + country);
 
   // queryURL is the url we'll use to query the API
   var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
@@ -62,9 +62,23 @@ function getCoordURL() {
 }
 
 function updateWeather (data) {
+  var countryName = '';
+
+  // load JSON object of ISO country codes
+  $.getJSON("./assets/js/iso_country_codes.json", function(data) {
+    countryName = $.grep(data, function(e){ 
+      return e.code == countryCode; 
+    })[0].country;
+
+    if (countryName === undefined) {
+      return 'unknown territory';
+    }
+
+    $('#city').text(`${city}, ${countryName} (${moment().format('DD/M/YYYY')})`)
+
+  });
 
     // display current weather to page
-    $('#city').text(`${city}, ${state} (${moment().format('DD/M/YYYY')})`)
     $('#current-temp').text("Temp (C): " + (data.list[0].main.temp -273.15).toFixed(2)) ;
     $('#current-wind').text("Wind: " + data.list[0].wind.speed);
     $('#current-humidity').text("Humidity: " + data.list[0].main.humidity);
