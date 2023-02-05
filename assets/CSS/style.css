@@ -1,0 +1,62 @@
+body {
+  background-image: url('/weather-dashboard/assets/images/weather-background-unbusy.jpg');
+  background-color: rgba(255, 255, 255, 1);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h1 {
+  color: grey;
+}
+
+.weather-header {
+  
+  /* background-image: radial-gradient(circle, red, yellow, green); */
+  background-image: radial-gradient(circle, #FFDB58, #87CEFA);
+}
+
+.hr {
+  border: 0;
+  height: 1px;
+  background-color: grey;
+}
+
+label {
+  font-size: 1.5rem !important;
+}
+
+h3 {
+  font-size: 2.5rem !important;
+  color: #8d9db6;
+  color: #bda75a
+}
+
+#today {
+  /* border: 1px solid rgb(219, 216, 216); */
+}
+
+.card {
+  width: 12rem;
+  background-color: transparent !important;
+  color: white !important;
+  border: none !important;
+
+}.card-title {
+  color: #8d9db6;
+}
+
+.region {
+  border: solid 1px grey;
+}
+
+.btn-primary {
+  background-color: #8d9db6 !important;
+}
+
+.list-group-item {
+  font-size: 13px !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+
