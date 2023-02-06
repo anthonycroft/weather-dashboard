@@ -70,7 +70,7 @@ function getCoordURL(searchCity) {
 function updateWeather (data) {
 
   // load JSON object of ISO country codes
-  $.getJSON("./assets/js/iso_country_codes.json", function(data) {
+  $.getJSON("assets/js/iso_country_codes.json", function(data) {
     countryName = $.grep(data, function(e){ 
       return e.code == countryCode; 
     })[0].country;
