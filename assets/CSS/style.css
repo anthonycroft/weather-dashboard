@@ -28,7 +28,7 @@ label {
   font-size: 1.5rem !important;
 }
 
-form label, h3, small, #day-0 p, .list-group-item {
+form label, h3, h4, small, #day-0 p, .list-group-item {
   color: var(--heading-color);
 }
 
@@ -60,7 +60,7 @@ h3 {
 }
 
 .list-group-item {
-  font-size: 15px !important;
+  font-size: 12px !important;
   background-color: transparent !important;
   border: none !important;
   height: 14px !important;
