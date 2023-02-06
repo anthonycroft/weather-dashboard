@@ -51,7 +51,7 @@ function getCoordURL(searchCity) {
   let inputCity = ''; // holds the search value user entered
 
   // queryURL is the url we'll use to query the API
-  var queryURL = "http://api.openweathermap.org/geo/1.0/direct?";
+  var queryURL = "https://api.openweathermap.org/geo/1.0/direct?";
 
   // Build an object to contain our API call's query parameters
   // Set the API key
