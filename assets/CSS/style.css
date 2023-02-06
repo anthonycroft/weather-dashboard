@@ -1,3 +1,7 @@
+:root {
+  --heading-color: #bda75a;
+}
+
 body {
   background-image: url('/weather-dashboard/assets/images/weather-background-unbusy.jpg');
   /* background-color: rgba(255, 255, 255, 1); */
@@ -25,12 +29,12 @@ label {
   font-size: 1.5rem !important;
 }
 
-form label, h3, small {
-  color: #bda75a
+form label, h3, small, #day-0 p, .list-group-item {
+  color: var(--heading-color);
 }
 
 small em {
-  color: orange;
+  color: rgb(10, 10, 10);
 }
 
 h3 {
@@ -44,11 +48,12 @@ h3 {
   border: none !important;
 
 }.card-title {
-  color: #2f3a4b;
+  color: #1d3862;
+
 }
 
 .region {
-  border: solid 1px grey;
+  border: solid 1px grey !important;
 }
 
 .btn-primary {
@@ -56,9 +61,14 @@ h3 {
 }
 
 .list-group-item {
-  font-size: 13px !important;
+  font-size: 15px !important;
   background-color: transparent !important;
   border: none !important;
+  height: 14px !important;
 }
 
 
+.card-body {
+  /* height: 100px !important; */
+  padding: 0 !important;
+}
