@@ -6,6 +6,20 @@ var countryCode = '';
 var countryName = '';
 const unknownTerritory = 'unknown territory'
 
+$(document).ready(function() {
+  // Your code to be executed when the document is ready
+
+  init();
+});
+
+function init() {
+  // display any previous request history buttons
+  var parsedObj = getHistory('cities');
+
+  addHistoryButton(parsedObj);
+
+}
+
   /**
  * pulls information from the form and builds the query URL
  * @returns {string} URL for openweathermap.org API based on form input
@@ -98,6 +112,7 @@ function updateWeather (data) {
         forecastTime = moment().add(i, 'day').hours(12).minutes(0).seconds(0).unix();
       } else {
         const hour = getLatestHour(moment().format('H'))
+       
         forecastTime = moment().add(i, 'day').hours(hour).minutes(0).seconds(0).unix();
       }
 
@@ -144,7 +159,8 @@ function updateHistory(city, countryName) {
   // adds buttons for last 5 cities requested
   var formattedCity;
   const maxCities = 5;
-  var maxStored = false;
+  const key = 'cities';
+  // var maxStored = false;
 
   // get a string in the correct format to compare with previously stored cities
   if (countryName === unknownTerritory || countryName === '') {
@@ -153,32 +169,29 @@ function updateHistory(city, countryName) {
     formattedCity = city + ", " + countryName;
   }
 
-  const key = "cities"; // key for storing requested cities
-  const storedString = localStorage.getItem(key);
+  // const key = "cities"; // key for storing requested cities
+  // const storedString = localStorage.getItem(key);
 
-  if (storedString === null) {
-    var parsedObj = {}; // set up a new cities array
-  } else {
-    
+  parsedObj = getHistory(key);
+  if (parsedObj !== {}) {
+    // var parsedObj = {}; // set up a new cities array
+    console.log("we are not an empty string");
     // we should have an array of cities - so parse it
-    parsedObj = JSON.parse(storedString);
+    // parsedObj = JSON.parse(storedString);
 
     let cities = Object.values(parsedObj);
 
     if (cities.includes(formattedCity)) {
+      addHistoryButton(parsedObj);
       return;
     }
   
-    // current city is not in stored array so process.
+    // current city is not in stored object so process.
     
-    // store the last element of the array (if array is already at limit), as it will 
-    // get over-written in next step
-
+    // add last value to a new incremented key (it will get overwritten in next step otherwise)
     if (cities.length < maxCities) {
       // create a new city object, storing the last object into it
       parsedObj[cities.length] = parsedObj[cities.length -1];
-    } else {
-      maxStored = true;
     }
 
     // move values so they are in next key position (keys are 0 - 4), e.g value in key 0 moves to Key 1
@@ -202,12 +215,31 @@ function updateHistory(city, countryName) {
 
 }
 
+
+function getHistory (key) {
+
+  // const key = "cities"; // key for storing requested cities
+  const storedString = localStorage.getItem(key);
+
+  if (storedString === null) {
+    return {}; // return empty object
+  } else {
+    // return parsed string
+    return JSON.parse(storedString);
+  }
+
+}
+
 function addHistoryButton (Obj) {
   const key = "cities"; // key for storing requested cities
 
+  if (Obj == {} || Obj === undefined) {
+    return;
+  }
+  
   // clear the history 
   $("#history").empty();
-
+  console.log("we added history")
   // add buttons in order of the key values
   $.each(Obj, function(key, value) {
     $("<button>").text(Obj[key])
