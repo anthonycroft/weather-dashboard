@@ -47,7 +47,6 @@ function buildQueryURLForecast(coords) {
 }
 
 function getCoordURL(searchCity) {
-  let inputCity = ''; // holds the search value user entered
 
   // queryURL is the url we'll use to query the API
   var queryURL = "https://api.openweathermap.org/geo/1.0/direct?";
@@ -55,6 +54,7 @@ function getCoordURL(searchCity) {
   // Build an object to contain our API call's query parameters
   var queryParams = { "appid": APIKey };
 
+  // let trimmedStr = $.trim(searchCity.replace(/\s+/g,''));
   queryParams.q = searchCity;
 
   queryParams.limit = 1;
@@ -66,7 +66,7 @@ function getCoordURL(searchCity) {
 }
 
 function updateWeather (data) {
-
+ 
   // load JSON object of ISO country codes
   $.getJSON("assets/js/iso_country_codes.json", function(data) {
     countryName = $.grep(data, function(e){ 
@@ -158,7 +158,6 @@ function updateHistory(city, countryName) {
   var formattedCity;
   const maxCities = 5;
   const key = 'cities';
-  // var maxStored = false;
 
   // get a string in the correct format to compare with previously stored cities
   if (countryName === unknownTerritory || countryName === '') {
@@ -167,15 +166,9 @@ function updateHistory(city, countryName) {
     formattedCity = city + ", " + countryName;
   }
 
-  // const key = "cities"; // key for storing requested cities
-  // const storedString = localStorage.getItem(key);
-
   parsedObj = getHistory(key);
+  
   if (parsedObj !== {}) {
-    // var parsedObj = {}; // set up a new cities array
-    console.log("we are not an empty string");
-    // we should have an array of cities - so parse it
-    // parsedObj = JSON.parse(storedString);
 
     let cities = Object.values(parsedObj);
 
@@ -193,7 +186,6 @@ function updateHistory(city, countryName) {
     }
 
     // move values so they are in next key position (keys are 0 - 4), e.g value in key 0 moves to Key 1
-
     if (cities.length > 1) {
       for (let i = cities.length -1; i > 0; i--) {
         parsedObj[i] = parsedObj[i - 1]
@@ -237,7 +229,6 @@ function addHistoryButton (Obj) {
   
   // clear the history 
   $("#history").empty();
-  console.log("we added history")
   // add buttons in order of the key values
   $.each(Obj, function(key, value) {
     $("<button>").text(Obj[key])
@@ -278,13 +269,13 @@ $("#run-search").on("click", function(event) {
   // (in addition to clicks). Prevents the page from reloading on form submit.
   event.preventDefault();
 
-  // Empty the region associated with the articles
-  // clear();
-
-    // Grab text the user typed into the search input
+  // Grab text the user typed into the search input
   var inputCity = $("#search-input")
     .val()
     .trim();
+
+  // Empty the region associated with the articles
+  $("#search-input").val("");
 
   // start search
   activateSearch(inputCity);
@@ -293,10 +284,12 @@ $("#run-search").on("click", function(event) {
 
 $("#history").on("click", "button", function() {
   // Your code to be executed on button click
-  
+
   // get the city name from button text
-  var searchCity = $(this).text();
-  console.log("search city is " + searchCity);
+  var str = $(this).text();
+
+  var searchCity = str.split(",")[0];
+
   // start search
   activateSearch(searchCity);
 
