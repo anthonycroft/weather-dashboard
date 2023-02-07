@@ -2,7 +2,7 @@
 Displays current climate and 5 day forecast for major towns and cities. Uses the https://api.openweathermap.org/ API.
 
 ## Description
-The app allows users to search weather conditions for locations stored in the openweathermap.org (OWM) database - currently some 200,000 world-wide locations.
+The app allows users to search weather conditions for locations stored in the openweathermap.org (OWM) database - currently some 200,000 locations world-wide.
 
 Upon entering the city name a search is made to retrieve the latitude and longitude via the following URL:
 
@@ -12,19 +12,19 @@ https://pro.openweathermap.org/data/2.5/forecast/hourly?lat={lat}&lon={lon}&appi
 
 London, GB
 
-From the data received the app then makes a second call to retrieve weather information based on the geocoding result. The following OWM API is used:
+From the data received the app then makes a second call to retrieve weather information based on the geocoding result from the previous call. The following OWM API is used:
 
-api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
-After receiving the data from this API call, the current weather and 5-day forecast are shown for the following data points:
+After receiving the data from this API call, the current and 5-day forecast weather are shown for the following data points:
 
 - Temperature (shown in degrees Celsius)
 - Wind
 - Humidity
 
-After a search is activated via the user clicking on the Search button, the input field is cleared ready for another search. Previous requests up to a maximum of 5 are stored in the local storage of the browser (if available) and can be re-initiated by clicking on one of the history buttons presented below the main Search button.
+After a search is activated via the Search button, the input field is cleared ready for another request. Previous requests up to a maximum of 5 are stored in the local storage of the browser (if available) and can be re-initiated by clicking on one of the history buttons presented below the main Search button.
 
-If a search string does not yield any data as a result of the first API call, then no update is made to the currently displayed weather information
+If a search string does not yield any data as a result of the first API (geocoding) call, then no update is made to the currently displayed weather information (if any is displayed)
 
 ## Dependencies
 The app uses the following external Javascript libraries:
@@ -48,4 +48,4 @@ The app shows a limited number of data points. A future upgrade would consider a
 
 ## Screenshots:
 
-![Weather Dashboard Home Page](https://github.com/anthonycroft/weather/blob/main/assets/images/weather-dashboard.png))
+![Weather Dashboard Home Page](https://github.com/anthonycroft/weather-dashboard/blob/main/assets/images/weather-dashboard.png))
