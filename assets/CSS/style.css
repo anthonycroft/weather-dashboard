@@ -1,5 +1,5 @@
 :root {
-  --heading-color: #bda75a;
+  --heading-color: #e7d07d;
   --header-title: grey;
 }
 
@@ -8,6 +8,7 @@ body {
   /* background-color: rgba(255, 255, 255, 1); */
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 h1 {
@@ -41,14 +42,16 @@ h3 {
 }
 
 .card {
-  width: 12rem;
+  width: 14rem !important;
   background-color: transparent !important;
   color: white !important;
   border: none !important;
 
-}.card-title {
-  color: #1d3862;
+}
 
+.card-title {
+  color: #1d3862;
+  padding-left: 4px;
 }
 
 .region {
@@ -60,12 +63,45 @@ h3 {
 }
 
 .list-group-item {
-  font-size: 12px !important;
+  font-size: 15px !important;
   background-color: transparent !important;
   border: none !important;
-  height: 14px !important;
+  height: 30px !important;
+  padding: 0.5rem 0.5rem !important;
 }
 
 .card-body {
   padding: 0 !important;
+}
+
+h2 {
+  font-size: 1.5rem !important;
+}
+
+@media (max-width: 575px) {
+  /* Your styles for small viewports here */
+  /* .card {
+    justify-content: center !important;
+
+  } */
+  h1 {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.3rem !important;
+  }
+  
+  h3 {
+    font-size: 2rem !important;
+    text-align: center;
+  }
+  .featured-city {
+    text-align: center;
+  }
+  .list-group-item {
+    font-size: 0.9rem !important;
+  }
 }

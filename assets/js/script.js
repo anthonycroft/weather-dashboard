@@ -33,7 +33,6 @@ function buildQueryURLForecast(coords) {
   var queryURL = "https://api.openweathermap.org/data/2.5/forecast?";
 
   // Build an object to contain our API call's query parameters
-  // Set the API key
   var queryParams = { "appid": APIKey };
 
   // Grab text the user typed into the search input, add to the queryParams object
@@ -54,7 +53,6 @@ function getCoordURL(searchCity) {
   var queryURL = "https://api.openweathermap.org/geo/1.0/direct?";
 
   // Build an object to contain our API call's query parameters
-  // Set the API key
   var queryParams = { "appid": APIKey };
 
   queryParams.q = searchCity;
@@ -79,7 +77,7 @@ function updateWeather (data) {
       countryName = unknownTerritory;
     }
 
-    $('#city').text(`${city}, ${countryName} (${moment().format('DD/M/YYYY')})`)
+    $('#city').text(`${city}, ${countryName} (${moment().format('D/M/YYYY')})`)
 
     updateHistory(city, countryName)
 
