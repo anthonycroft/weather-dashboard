@@ -33,8 +33,9 @@ form label, h3, h4, small, #day-0 p, .list-group-item {
   color: var(--heading-color);
 }
 
-small em {
-  color: rgb(10, 10, 10);
+small {
+  /* color: rgb(10, 10, 10); */
+  font-size: 0.7rem !important;
 }
 
 h3 {
@@ -46,7 +47,10 @@ h3 {
   background-color: transparent !important;
   color: white !important;
   border: none !important;
+}
 
+.history {
+  font-size: 10px !important;
 }
 
 .card-title {
@@ -60,6 +64,10 @@ h3 {
 
 .btn-primary {
   background-color: #8d9db6 !important;
+}
+
+.btn-secondary {
+  font-size: 14px !important;
 }
 
 .list-group-item {
@@ -80,10 +88,7 @@ h2 {
 
 @media (max-width: 575px) {
   /* Your styles for small viewports here */
-  /* .card {
-    justify-content: center !important;
 
-  } */
   h1 {
     font-size: 10px;
   }
@@ -103,5 +108,9 @@ h2 {
   }
   .list-group-item {
     font-size: 0.9rem !important;
+  }
+
+  h4 {
+    text-align: center;
   }
 }
