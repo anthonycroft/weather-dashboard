@@ -12,17 +12,17 @@ https://pro.openweathermap.org/data/2.5/forecast/hourly?lat={lat}&lon={lon}&appi
 
 London, GB
 
-From the data received the app then makes a second call to retrieve weather information based on the geocoding result from the previous call. The following OWM API is used:
+From the data received from the first call the app then makes a second API call to retrieve weather information. The following OWM API is used for this purpose:
 
 https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
-After receiving the data from this API call, the current and 5-day forecast weather are shown for the following data points:
+After receiving data (where available), the current and 5-day forecast weather are shown for the following data points:
 
 - Temperature (shown in degrees Celsius)
-- Wind
+- Wind speed
 - Humidity
 
-After a search is activated via the Search button, the input field is cleared ready for another request. Previous requests up to a maximum of 5 are stored in the local storage of the browser (if available) and can be re-initiated by clicking on one of the history buttons presented below the main Search button.
+After a search is activated via the Search button, the input field is cleared ready for futher requests. Previous requests up to a maximum of 5 are stored in the local storage of the browser (if available) and can be re-initiated by clicking on one of the history buttons presented below the main Search button.
 
 If a search string does not yield any data as a result of the first API (geocoding) call, then no update is made to the currently displayed weather information (if any is displayed)
 
